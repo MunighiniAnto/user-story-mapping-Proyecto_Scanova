@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Story Mapping - Tablero Interactivo ISPC</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .backbone-cell { background-color: #334155; color: #ffffff; }
+        .release-1 { background-color: #f8fafc; border-left: 4px solid #0284c7; }
+        .release-2 { background-color: #f0fdf4; border-left: 4px solid #10b981; }
+        .release-3 { background-color: #faf5ff; border-left: 4px solid #8b5cf6; }
+        .release-row { transition: all 0.2s ease-in-out; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans p-6">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- Encabezado -->
+        <header class="mb-6 border-b border-slate-200 pb-5 flex flex-col gap-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h1 class="text-3xl font-bold text-slate-900">User Story Mapping</h1>
+                    <p class="text-sm text-slate-500 mt-1">Proyecto Integrador - Ciencia de Datos e IA. Diferenciación explícita de flujos por Proto-persona para evitar mapas genéricos.</p>
+                </div>
+                
+                <!-- FILTROS DE RELEASES -->
+                <div class="flex flex-wrap gap-2 text-xs font-semibold">
+                    <button onclick="filtrarRelease('todos')" id="btn-todos" class="px-3 py-2 rounded bg-slate-800 text-white shadow-sm transition cursor-pointer">
+                        Mostrar Todo
+                    </button>
+                    <button onclick="filtrarRelease('r1')" id="btn-r1" class="px-3 py-2 rounded bg-white text-sky-700 border border-sky-300 shadow-sm transition cursor-pointer">
+                        🚀 Release 1 (MVP)
+                    </button>
+                    <button onclick="filtrarRelease('r2')" id="btn-r2" class="px-3 py-2 rounded bg-white text-emerald-700 border border-emerald-300 shadow-sm transition cursor-pointer">
+                        📈 Release 2
+                    </button>
+                    <button onclick="filtrarRelease('r3')" id="btn-r3" class="px-3 py-2 rounded bg-white text-purple-700 border border-purple-300 shadow-sm transition cursor-pointer">
+                        ⚡ Release 3
+                    </button>
+                </div>
+            </div>
+
+            <!-- FILTROS POR PROTO-PERSONA / ROL -->
+            <div class="bg-slate-100 p-2.5 rounded-lg flex flex-wrap items-center gap-3 text-xs font-medium border border-slate-200">
+                <span class="text-slate-500 font-bold uppercase tracking-wider text-[10px]">Filtrar por Actor (Ver flujo exclusivo):</span>
+                <button onclick="filtrarPersona('todos')" id="btn-p-todos" class="px-3 py-1 rounded-full bg-slate-200 text-slate-800 font-bold cursor-pointer transition">
+                    Todos los actores
+                </button>
+                <button onclick="filtrarPersona('ana')" id="btn-p-ana" class="px-3 py-1 rounded-full bg-white text-sky-700 border border-sky-300 font-semibold cursor-pointer transition flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-sky-500"></span> Ana (Administrativa)
+                </button>
+                <button onclick="filtrarPersona('carlos')" id="btn-p-carlos" class="px-3 py-1 rounded-full bg-white text-purple-700 border border-purple-300 font-semibold cursor-pointer transition flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-purple-500"></span> Carlos (Auditor)
+                </button>
+            </div>
+        </header>
+
+        <!-- SECCIÓN PROTO-PERSONAS COMPLETAS -->
+        <section class="mb-8 bg-white border border-slate-200 rounded-lg p-5 shadow-xs">
+            <h2 class="text-xs font-bold uppercase text-slate-400 tracking-wider mb-4 flex items-center gap-2">
+                👥 Proto-personas / Actores del Sistema y Código de Color
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Persona 1 -->
+                <div class="p-4 bg-sky-50/40 border border-sky-100 rounded-md">
+                    <div class="flex items-center justify-between mb-2 pb-2 border-b border-sky-100">
+                        <div class="flex items-center gap-2">
+                            <div class="w-2.5 h-2.5 rounded-full bg-sky-500"></div>
+                            <h3 class="text-sm font-bold text-slate-900">Ana, Administrativa Contable</h3>
+                        </div>
+                        <span class="text-[9px] font-bold uppercase bg-sky-100 text-sky-800 px-2 py-0.5 rounded">Flujo Operativo</span>
+                    </div>
+                    <ul class="text-xs text-slate-600 space-y-1">
+                        <li><strong>Objetivo principal:</strong> Digitalizar y conciliar facturas rápidamente sin carga manual redundante.</li>
+                        <li><strong>Frustración clave:</strong> Pérdida de tiempo tipeando datos campo por campo y corrigiendo errores de transcripción.</li>
+                        <li><strong>Nivel técnico:</strong> Intermedio (manejo fluido de planillas de cálculo y sistemas web de gestión).</li>
+                        <li class="pt-1 text-sky-700"><strong>Foco en el mapa:</strong> Carga de documentos, control del OCR, edición y persistencia de registros diarios.</li>
+                    </ul>
+                </div>
+                <!-- Persona 2 -->
+                <div class="p-4 bg-purple-50/40 border border-purple-100 rounded-md">
+                    <div class="flex items-center justify-between mb-2 pb-2 border-b border-purple-100">
+                        <div class="flex items-center gap-2">
+                            <div class="w-2.5 h-2.5 rounded-full bg-purple-500"></div>
+                            <h3 class="text-sm font-bold text-slate-900">Carlos, Auditor / Analista de Datos</h3>
+                        </div>
+                        <span class="text-[9px] font-bold uppercase bg-purple-100 text-purple-800 px-2 py-0.5 rounded">Flujo Analítico</span>
+                    </div>
+                    <ul class="text-xs text-slate-600 space-y-1">
+                        <li><strong>Objetivo principal:</strong> Consultar el historial y descargar reportes consolidados para auditorías y análisis de costos.</li>
+                        <li><strong>Frustración clave:</strong> Dificultad para buscar información histórica de proveedores o cruzar datos en formatos heterogéneos.</li>
+                        <li><strong>Nivel técnico:</strong> Avanzado (procesamiento de datos y exportación de estructuras limpias hacia herramientas BI).</li>
+                        <li class="pt-1 text-purple-700"><strong>Foco en el mapa:</strong> Explotación de la información histórica, filtros combinados complejos y exportación limpia para auditorías.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Indicadores de Ejes -->
+        <div class="flex justify-between items-center mb-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 px-1">
+            <div class="flex items-center gap-1">
+                <span>Flujo del Usuario (Horizontal / Tiempo)</span>
+                <span>→</span>
+            </div>
+            <div class="flex items-center gap-1">
+                <span>Prioridad (Vertical)</span>
+                <span>↓</span>
+            </div>
+        </div>
+
+        <!-- Tabla del Mapa Visual -->
+        <div class="overflow-x-auto shadow-sm rounded-lg border border-slate-200">
+            <table class="w-full text-left border-collapse bg-white min-w-[1000px]">
+                <thead>
+                    <!-- CAPA 1: ACTIVIDADES -->
+                    <tr class="bg-slate-900 text-white border-b border-slate-800">
+                        <th class="p-3 text-center text-xs font-bold uppercase tracking-wider border border-slate-800 bg-slate-950 w-1/5">
+                            <span class="block text-[9px] text-amber-400 font-mono">ACTIVIDAD</span> Ingresar Documentos
+                        </th>
+                        <th class="p-3 text-center text-xs font-bold uppercase tracking-wider border border-slate-800 bg-slate-950 w-1/5">
+                            <span class="block text-[9px] text-amber-400 font-mono">ACTIVIDAD</span> Procesar con OCR
+                        </th>
+                        <th class="p-3 text-center text-xs font-bold uppercase tracking-wider border border-slate-800 bg-slate-950 w-1/5">
+                            <span class="block text-[9px] text-amber-400 font-mono">ACTIVIDAD</span> Validar y Controlar
+                        </th>
+                        <th class="p-3 text-center text-xs font-bold uppercase tracking-wider border border-slate-800 bg-slate-950 w-1/5">
+                            <span class="block text-[9px] text-amber-400 font-mono">ACTIVIDAD</span> Gestionar y Persistir
+                        </th>
+                        <th class="p-3 text-center text-xs font-bold uppercase tracking-wider border border-slate-800 bg-slate-950 w-1/5">
+                            <span class="block text-[9px] text-amber-400 font-mono">ACTIVIDAD</span> Consultar y Exportar
+                        </th>
+                    </tr>
+                    <!-- CAPA 2: TAREAS (BACKBONE) -->
+                    <tr class="backbone-cell text-slate-100">
+                        <th class="p-3 text-center text-xs font-semibold border border-slate-600">
+                            <span class="block text-[9px] text-slate-300 font-mono">TAREAS (BACKBONE)</span> Subir archivo de factura
+                        </th>
+                        <th class="p-3 text-center text-xs font-semibold border border-slate-600">
+                            <span class="block text-[9px] text-slate-300 font-mono">TAREAS (BACKBONE)</span> Detectar campos y extraer texto
+                        </th>
+                        <th class="p-3 text-center text-xs font-semibold border border-slate-600">
+                            <span class="block text-[9px] text-slate-300 font-mono">TAREAS (BACKBONE)</span> Revisar formulario de datos
+                        </th>
+                        <th class="p-3 text-center text-xs font-semibold border border-slate-600">
+                            <span class="block text-[9px] text-slate-300 font-mono">TAREAS (BACKBONE)</span> Guardar comprobante
+                        </th>
+                        <th class="p-3 text-center text-xs font-semibold border border-slate-600">
+                            <span class="block text-[9px] text-slate-300 font-mono">TAREAS (BACKBONE)</span> Visualizar e interrogar historial
+                        </th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <!-- ================= RELEASE 1 ================= -->
+                    <tr class="border-t border-slate-300 release-row r1">
+                        <td colspan="5" class="bg-sky-700 text-white font-semibold text-xs px-4 py-2 uppercase tracking-wide">
+                            🚀 Release 1: Producto Mínimo Viable (MVP)
+                        </td>
+                    </tr>
+                    <tr class="release-1 release-row r1">
+                        <td class="p-3 border border-slate-200 align-top target-card persona-ana">
+                            <div onclick="abrirModal(1)" class="bg-white p-3 rounded shadow-xs border-l-4 border-l-sky-500 border-y-slate-200 border-r-slate-200 border hover:border-sky-400 transition cursor-pointer">
+                                <div class="flex justify-between items-center text-[9px] font-mono font-bold">
+                                    <span class="text-sky-700">HU-01</span>
+                                    <span class="text-sky-600 bg-sky-50 px-1.5 py-0.2 rounded uppercase">👤 Ana</span>
+                                </div>
+                                <h4 class="font-semibold text-sm text-slate-900 mt-1">Carga Individual</h4>
+                                <p class="text-xs text-slate-500 mt-0.5">Carga de facturas en PDF o imagen.</p>
+                            </div>
+                        </td>
+                        <td class="p-3 border border-slate-200 align-top">
+                            <div onclick="abrirModal(2)" class="bg-white p-3 rounded shadow-xs border-l-4 border-l-sky-500 border-y-slate-200 border-r-slate-200 border mb-2 hover:border-sky-400 transition cursor-pointer target-card persona-ana">
+                                <div class="flex justify-between items-center text-[9px] font-mono font-bold">
+                                    <span class="text-sky-700">HU-02</span>
+                                    <span class="text-sky-600 bg-sky-50 px-1.5 py-0.2 rounded uppercase">👤 Ana</span>
+                                </div>
+                                <h4 class="font-semibold text-sm text-slate-900 mt-1">Delimitación</h4>
+                                <p class="text-xs text-slate-500 mt-0.5">Identificación de campos relevantes.</p>
+                            </div>
+                            <div onclick="abrirModal(3)" class="bg-white p-3 rounded shadow-xs border-l-4 border-l-sky-500 border-y-slate-200 border-r-slate-200 border hover:border-sky-400 transition cursor-pointer target-card persona-ana">
+                                <div class="flex justify-between items-center text-[9px] font-mono font-bold">
+                                    <span class="text-sky-700">HU-03</span>
+                                    <span class="text-sky-600 bg-sky-50 px-1.5 py-0.2 rounded uppercase">👤 Ana</span>
+                                </div>
+                                <h4 class="font-semibold text-sm text-slate-900 mt-1">Extracción OCR</h4>
+                                <p class="text-xs text-slate-500 mt-0.5">Procesamiento automático.</p>
+                            </div>
+                        </td>
+                        <td class="p-3 border border-slate-200 align-top target-card persona-ana">
+                            <div onclick="abrirModal(4)" class="bg-white p-3 rounded shadow-xs border-l-4 border-l-sky-500 border-y-slate-200 border-r-slate-200 border hover:border-sky-400 transition cursor-pointer">
+                                <div class="flex justify-between items-center text-[9px] font-mono font-bold">
+                                    <span class="text-sky-700">HU-04</span>
+                                    <span class="text-sky-600 bg-sky-50 px-1.5 py-0.2 rounded uppercase">👤 Ana</span>
+                                </div>
+                                <h4 class="font-semibold text-sm text-slate-900 mt-1">Visualización</h4>
+                                <p class="text-xs text-slate-500 mt-0.5">Formulario en pantalla con datos extraídos.</p>
+                            </div>
+                        </td>
+                        <td class="p-3 border border-slate-200 align-top target-card persona-ana">
+                            <div onclick="abrirModal(6)" class="bg-white p-3 rounded shadow-xs border-l-4 border-l-sky-500 border-y-slate-200 border-r-slate-200 border hover:border-sky-400 transition cursor-pointer">
+                                <div class="flex justify-between items-center text-[9px] font-mono font-bold">
+                                    <span class="text-sky-700">HU-06</span>
+                                    <span class="text-sky-600 bg-sky-50 px-1.5 py-0.2 rounded uppercase">👤 Ana</span>
+                                </div>
+                                <h4 class="font-semibold text-sm text-slate-900 mt-1">Registro</h4>
+                                <p class="text-xs text-slate-500 mt-0.5">Guardar de forma persistente.</p>
+                            </div>
+                        </td>
+                        <td class="p-3 border border-slate-200"></td>
+                    </tr>
+
+                    <!-- ================= RELEASE 2 ================= -->
+                    <tr class="border-t border-slate-300 release-row r2">
+                        <td colspan="5" class="bg-emerald-600 text-white font-semibold text-xs px-4 py-2 uppercase tracking-wide">
+                            📈 Release 2: Optimización y Control Operativo
+                        </td>
+                    </tr>
+                    <tr class="release-2 release-row r2">
+                        <td class="p-3 border border-slate-200"></td>
+                        <td class="p-3 border border-slate-200"></td>
+                        <td class="p-3 border border-slate-200 align-top target-card persona-ana">
+                            <div onclick="abrirModal(5)" class="bg-white p-3 rounded shadow-xs border-l-4 border-l-sky-500 border-y-slate-200 border-r-slate-200 border hover:border-emerald-400 transition cursor-pointer">
+                                <div class="flex justify-between items-center text-[9px] font-mono font-bold">
+                                    <span class="text-emerald-600">HU-05</span>
+                                    <span class="text-sky-600 bg-sky-50 px-1.5 py-0.2 rounded uppercase">👤 Ana</span>
+                                </div>
+                                <h4 class="font-semibold text-sm text-slate-900 mt-1">Edición y Validación</h4>
+                                <p class="text-xs text-slate-500 mt-0.5">Corrección manual y alertas.</p>
+                            </div>
+                        </td>
+                        <td class="p-3 border border-slate-200"></td>
+                        <td class="p-3 border border-slate-200 align-top target-card persona-carlos">
+                            <div onclick="abrirModal(7)" class="bg-white p-3 rounded shadow-xs border-l-4 border-l-purple-500 border-y-slate-200 border-r-slate-200 border hover:border-emerald-400 transition cursor-pointer">
+                                <div class="flex justify-between items-center text-[9px] font-mono font-bold">
+                                    <span class="text-emerald-600">HU-07</span>
+                                    <span class="text-purple-600 bg-purple-50 px-1.5 py-0.2 rounded uppercase">🕵️ Carlos</span>
+                                </div>
+                                <h4 class="font-semibold text-sm text-slate-900 mt-1">Historial</h4>
+                                <p class="text-xs text-slate-500 mt-0.5">Consulta y listado general para auditoría.</p>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- ================= RELEASE 3 ================= -->
+                    <tr class="border-t border-slate-300 release-row r3">
+                        <td colspan="5" class="bg-purple-600 text-white font-semibold text-xs px-4 py-2 uppercase tracking-wide">
+                            ⚡ Release 3: Eficiencia y Escalabilidad
+                        </td>
+                    </tr>
+                    <tr class="release-3 release-row r3">
+                        <td class="p-3 border border-slate-200 align-top target-card persona-ana">
+                            <div onclick="abrirModal(9)" class="bg-white p-3 rounded shadow-xs border-l-4 border-l-sky-500 border-y-slate-200 border-r-slate-200 border hover:border-purple-400 transition cursor-pointer">
+                                <div class="flex justify-between items-center text-[9px] font-mono font-bold">
+                                    <span class="text-purple-600">HU-09</span>
+                                    <span class="text-sky-600 bg-sky-50 px-1.5 py-0.2 rounded uppercase">👤 Ana</span>
+                                </div>
+                                <h4 class="font-semibold text-sm text-slate-900 mt-1">Carga Masiva</h4>
+                                <p class="text-xs text-slate-500 mt-0.5">Subida simultánea y estados en lote.</p>
+                            </div>
+                        </td>
+                        <td class="p-3 border border-slate-200"></td>
+                        <td class="p-3 border border-slate-200"></td>
+                        <td class="p-3 border border-slate-200"></td>
+                        <td class="p-3 border border-slate-200 align-top">
+                            <div onclick="abrirModal(8)" class="bg-white p-3 rounded shadow-xs border-l-4 border-l-purple-500 border-y-slate-200 border-r-slate-200 border mb-2 hover:border-purple-400 transition cursor-pointer target-card persona-carlos">
+                                <div class="flex justify-between items-center text-[9px] font-mono font-bold">
+                                    <span class="text-purple-600">HU-08</span>
+                                    <span class="text-purple-600 bg-purple-50 px-1.5 py-0.2 rounded uppercase">🕵️ Carlos</span>
+                                </div>
+                                <h4 class="font-semibold text-sm text-slate-900 mt-1">Búsqueda y Filtros</h4>
+                                <p class="text-xs text-slate-500 mt-0.5">Filtros combinados avanzados.</p>
+                            </div>
+                            <div onclick="abrirModal(10)" class="bg-white p-3 rounded shadow-xs border-l-4 border-l-purple-500 border-y-slate-200 border-r-slate-200 border hover:border-purple-400 transition cursor-pointer target-card persona-carlos">
+                                <div class="flex justify-between items-center text-[9px] font-mono font-bold">
+                                    <span class="text-purple-600">HU-10</span>
+                                    <span class="text-purple-600 bg-purple-50 px-1.5 py-0.2 rounded uppercase">🕵️ Carlos</span>
+                                </div>
+                                <h4 class="font-semibold text-sm text-slate-900 mt-1">Exportación</h4>
+                                <p class="text-xs text-slate-500 mt-0.5">Descarga estructurada en Excel/CSV.</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ================= VENTANA MODAL ================= -->
+    <div id="modal-detalle" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl p-6 relative">
+            <button onclick="cerrarModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl font-bold p-1 cursor-pointer">&times;</button>
+            <div id="modal-content">
+                <!-- Inyección dinámica -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT INTERACTIVO ================= -->
+    <script>
+        const historiasData = {
+            1: { 
+                id: "HU-01", rol: "Ana (Administrativa Contable)", prioridad: "Alta", titulo: "Carga de facturas pdf e imágenes", historia: "Como administrativo del área contable, quiero poder cargar facturas en formato PDF o imagen, para enviarlas al sistema y comenzar con la extracción automática.", 
+                criterios: [
+                    "Dado que el usuario selecciona un archivo válido / Cuando realiza la carga / Entonces el sistema acepta el archivo correctamente.", 
+                    "Dado que el usuario intenta cargar un formato no permitido / Cuando confirma la carga / Entonces el sistema muestra un mensaje de error.", 
+                    "Dado que la carga finaliza correctamente / Cuando el sistema recibe el archivo / Entonces inicia el procesamiento automático."
+                ] 
+            },
+            2: { 
+                id: "HU-02", rol: "Ana (Administrativa Contable)", prioridad: "Alta", titulo: "Delimitación de datos a extraer", historia: "Como administrativo del área contable, quiero que el sistema identifique y delimite los campos relevantes, para define qué información debe extraerse automáticamente mediante OCR.", 
+                criterios: [
+                    "Dado que el usuario cargó una factura válida / Cuando el sistema inicia el preprocesamiento / Entonces identifica los campos relevantes del documento.", 
+                    "Dado que un campo no puede identificarse correctamente / Cuando el sistema finaliza el análisis / Entonces informa que ese dato requiere revisión manual.", 
+                    "Dado que la identificación finaliza correctamente / Cuando el sistema continúa el flujo / Entonces envía únicamente los campos detectados al módulo OCR."
+                ] 
+            },
+            3: { 
+                id: "HU-03", rol: "Ana (Administrativa Contable)", prioridad: "Alta", titulo: "Extracción automática mediante OCR", historia: "Como administrativo del área contable, quiero que el sistema extraiga automáticamente los datos de una factura cargada mediante OCR, para evitar la carga manual de información.", 
+                criterios: [
+                    "Dado que el usuario cargó una factura válida / Cuando el sistema inicia el procesamiento OCR / Entonces extrae automáticamente los campos delimitados.", 
+                    "Dado que el OCR finaliza correctamente / Cuando termina el procesamiento / Entonces el sistema almacena los datos extraídos.", 
+                    "Dado que ocurre un error durante el procesamiento / Cuando el sistema detecta el problema / Entonces muestra un mensaje de error al usuario."
+                ] 
+            },
+            4: { 
+                id: "HU-04", rol: "Ana (Administrativa Contable)", prioridad: "Alta", titulo: "Visualización de datos extraídos", historia: "Como administrativo del área contable, quiero visualizar en pantalla los datos extraídos de la factura, para poder revisarlos antes de confirmarlos y evitar errores.", 
+                criterios: [
+                    "Dado que el sistema procesó una factura correctamente / Cuando finaliza la extracción de datos / Entonces muestra en pantalla la información obtenida.", 
+                    "Dado que los datos fueron extraídos / Cuando se presenta al usuario / Entonces se visualiza en un formato claro y organizado tipo formulario.", 
+                    "Dado que el sistema muestra los datos de la factura / Cuando el usuario visualiza la información / Entonces se incluyen al menos los siguientes campos: fecha, CUIT, proveedor y monto total.", 
+                    "Dado que finaliza el procesamiento de la factura / Cuando el sistema completa la extracción / Entonces la pantalla se carga automáticamente con los datos sin intervención del usuario."
+                ] 
+            },
+            5: { 
+                id: "HU-05", rol: "Ana (Administrativa Contable)", prioridad: "Media", titulo: "Edición y validación de datos", historia: "Como usuario administrativo del área contable, quiero poder editar los datos extraídos de la factura, para corregir posibles errores antes de guardarlos en el sistema.", 
+                criterios: [
+                    "Dado que el usuario visualiza los datos extraídos de una factura / Cuando selecciona un campo / Entonces puede editar su valor directamente desde la pantalla.", 
+                    "Dado que el usuario ingresa un nuevo valor / Cuando el sistema valida el dato / Entonces verifica que el formato sea correcto fecha válida, montos, etc.", 
+                    "Dado que existen errores en los datos obligatorios / Cuando el usuario intenta continuar / Entonces el sistema bloquea la acción hasta que los errores sean corregidos.", 
+                    "Dado que un dato ingresado es inválido / Cuando el sistema realiza la validación / Entonces muestra un mensaje de error indicando el problema.", 
+                    "Dado que algunos datos poseen baja confianza de extracción / Cuando el usuario revisa la factura / Entonces el sistema resalta los campos que requieren revisión manual."
+                ] 
+            },
+            6: { 
+                id: "HU-06", rol: "Ana (Administrativa Contable)", prioridad: "Alta", titulo: "Registro de facturas", historia: "Como usuario administrativo del área contable, quiero guardar la factura procesada en una tabla, para llevar un control digital organizado de los gastos.", 
+                criterios: [
+                    "Dado que el usuario revisó o editó los datos de la factura / Cuando selecciona la opción de guardar / Entonces el sistema permite registrar la factura.", 
+                    "Dado que el usuario intenta guardar una factura / Cuando el sistema valida los datos / Entonces verifica que los campos obligatorios estén completados.", 
+                    "Dado que ya existe una factura registrada con el mismo número / Cuando el usuario intenta guardar una nueva factura duplicada / Entonces el sistema evita el guardado y notifica al usuario.", 
+                    "Dado que la factura se guarda correctamente / Cuando finaliza el proceso / Entonces el sistema muestra un mensaje de confirmación.", 
+                    "Dado que ocurre un error durante el guardado / Cuando el sistema no puede completar la operación / Entonces muestra un mensaje descriptivo de error al usuario.", 
+                    "Dado que la factura fue registrada correctamente / Cuando el usuario accede al sistema / Entonces la factura queda disponible para su consulta posterior."
+                ] 
+            },
+            7: { 
+                id: "HU-07", rol: "Carlos (Auditor / Analista)", prioridad: "Media", titulo: "Historial de facturas", historia: "Como auditor, quiero poder consultar las facturas registradas en el sistema, para acceder rápidamente a la información sin revisar archivos manuales.", 
+                criterios: [
+                    "Dado que existen facturas registradas en el sistema / Cuando el usuario accede al módulo de consulta / Entonces el sistema muestra un listado de facturas.", 
+                    "Dado que se visualiza el listado de facturas / Cuando el sistema presenta la información / Entonces cada factura incluye datos básicos como fecha, proveedor, monto, entre otros.", 
+                    "Dado que el usuario selecciona una factura del listado / Cuando accede al detalle / Entonces el sistema muestra toda la información registrada de la factura.", 
+                    "Dado que existen muchas facturas registradas / Cuando el usuario navega por el historial / Entonces el sistema organiza la información de manera clara y ordenada.", 
+                    "Dado que ocurre un error al recuperar la información / Cuando el sistema intenta cargar el historial / Entonces muestra un mensaje de error claro al usuario."
+                ] 
+            },
+            8: { 
+                id: "HU-08", rol: "Carlos (Auditor / Analista)", prioridad: "Baja", titulo: "Búsqueda y filtros", historia: "Como auditor, quiero poder buscar y filtrar facturas por distintos criterios, para encontrar rápidamente la información que necesito en mis controles.", 
+                criterios: [
+                    "Dado que existen facturas registradas / Cuando el usuario realiza una búsqueda / Entonces el sistema muestra coincidencias.", 
+                    "Dado que el usuario desea acortar resultados/ Cuando aplica filtros por fecha o proveedor / Entonces el sistema muestra únicamente las facturas que cumplan esos criterios.", 
+                    "Dado que el usuario aplica múltiples filtros / Cuando estos son combinados / Entonces el sistema muestra resultados que cumplan todas las condiciones seleccionadas.", 
+                    "Dado que el usuario aplica filtros o realiza una búsqueda / Cuando se actualizan los criterios / Entonces el listado se actualiza automáticamente.", 
+                    "Dado que no existen resultados para los criterios aplicados / Cuando el sistema procesa la búsqueda / Entonces muestra un mensaje indicando que no hay resultados.", 
+                    "Dado que el usuario desea quitar los filtros aplicados / Cuando selecciona la opción de limpiar filtros / Entonces el sistema restablece el listado completo de facturas."
+                ] 
+            },
+            9: { 
+                id: "HU-09", rol: "Ana (Administrativa Contable)", prioridad: "Baja", titulo: "Carga masiva", historia: "Como administrativo del área contable, quiero poder cargar múltiples facturas al mismo tiempo, para reducir el tiempo dedicado a la carga de comprobantes.", 
+                criterios: [
+                    "Dado que el usuario desea cargar varias facturas / Cuando selecciona múltiples archivos en una sola acción / Entonces el sistema permite subir todos los archivos simultáneamente.", 
+                    "Dado que el usuario selecciona archivos / Cuando los carga en el sistema / Entonces se aceptan únicamente los formatos validados.", 
+                    "Dado que los archivos son procesados / Cuando inicia el procesamiento / Entonces el sistema muestra el estado individual de cada factura.", 
+                    "Dado que una factura fue procesada / Cuando el sistema finaliza la extracción / Entonces los datos pueden ser visualizados y editados por el usuario.", 
+                    "Dado que uno o más archivos no pudieron ser procesados / Cuando el sistema detecta el error / Entonces informa al usuario qué archivos fallaron."
+                ] 
+            },
+            10: { 
+                id: "HU-10", rol: "Carlos (Auditor / Analista)", prioridad: "Baja", titulo: "Exportación de facturas", historia: "Como auditor, quiero exportar las facturas registradas a un archivo (Excel o CSV), para poder utilizarlas en reportes, análisis o compartirlas con otros sistemas.", 
+                criterios: [
+                    "Dado que el usuario desea exportar facturas / Cuando selecciona el formato de exportación EXCEL O CSV / Entonces el sistema genera el archivo en el formato elegido.", 
+                    "Dado que el usuario tiene filtros aplicados / Cuando exporta las facturas / Entonces se exportan únicamente las facturas visibles según esos filtros.", 
+                    "Dado que el archivo fue generado / Cuando finaliza el proceso / Entonces el sistema permite descargar el archivo.", 
+                    "Dado que el usuario abre el archivo exportado/ Cuando visualiza la información / Entonces los datos están organizados en columnas claras y definidas.", 
+                    "Dado que la exportación se realiza correctamente / Cuando finaliza el proceso / Entonces el sistema muestra un mensaje de éxito.", 
+                    "Dado que ocurre un error durante la exportación / Cuando el sistema no puede generar el archivo / Entonces muestra un mensaje de error claro al usuario."
+                ] 
+            }
+        };
+
+        function abrirModal(id) {
+            const data = historiasData[id];
+            if(!data) return;
+
+            let colorPrioridad = data.prioridad === 'Alta' ? 'bg-rose-100 text-rose-700' : (data.prioridad === 'Media' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-700');
+            let colorRol = data.rol.includes("Ana") ? 'bg-sky-100 text-sky-800 border-sky-300' : 'bg-purple-100 text-purple-800 border-purple-300';
+
+            let criteriosHTML = '';
+            data.criterios.forEach(crit => {
+                let formatoCrit = crit
+                    .replace(/Dado que/g, '<strong class="text-sky-700">Dado que</strong>')
+                    .replace(/Cuando/g, '<strong class="text-amber-700">Cuando</strong>')
+                    .replace(/Entonces/g, '<strong class="text-emerald-700">Entonces</strong>');
+                
+                criteriosHTML += `<li class="bg-slate-50 border-l-4 border-slate-400 p-3 rounded-r text-xs text-slate-700 leading-relaxed shadow-xs">${formatoCrit}</li>`;
+            });
+
+            document.getElementById('modal-content').innerHTML = `
+                <div class="flex flex-col gap-2 mb-2">
+                    <div class="flex justify-between items-start gap-4">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2 py-0.5 bg-slate-800 text-white text-xs font-mono rounded font-bold">${data.id}</span>
+                            <h3 class="text-xl font-bold text-slate-900">${data.titulo}</h3>
+                        </div>
+                        <span class="px-2.5 py-1 text-xs font-bold rounded-full ${colorPrioridad}">
+                            Prioridad ${data.prioridad}
+                        </span>
+                    </div>
+                    <div class="flex">
+                        <span class="text-xs font-semibold px-2 py-0.5 rounded border ${colorRol}">
+                            Actor Responsable: ${data.rol}
+                        </span>
+                    </div>
+                </div>
+                <hr class="border-slate-200 my-3">
+                
+                <div class="mb-5">
+                    <h4 class="text-[10px] font-bold uppercase text-slate-400 tracking-wider mb-1">Descripción de la Historia</h4>
+                    <p class="text-sm text-slate-800 bg-slate-50/50 border border-slate-200 p-3 rounded italic">"${data.historia}"</p>
+                </div>
+
+                <!-- 1. CRITERIOS DE ACEPTACIÓN -->
+                <div class="mb-5">
+                    <h4 class="text-[10px] font-bold uppercase text-slate-400 tracking-wider mb-2">Criterios de Aceptación (Gherkin)</h4>
+                    <ul class="flex flex-col gap-2">
+                        ${criteriosHTML}
+                    </ul>
+                </div>
+
+                <!-- 2. CHECKLIST INVEST ORIGINAL COMPACTO -->
+                <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                    <h4 class="text-[10px] font-bold uppercase text-slate-400 tracking-wider mb-3 border-b border-slate-200 pb-1">Evaluación de Calidad (INVEST)</h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs font-medium text-slate-700">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-emerald-600 font-bold text-sm">✓</span> <span>Independiente</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-emerald-600 font-bold text-sm">✓</span> <span>Negociable</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-emerald-600 font-bold text-sm">✓</span> <span>Valiosa</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-emerald-600 font-bold text-sm">✓</span> <span>Estimable</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-emerald-600 font-bold text-sm">✓</span> <span>Small (Corta)</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-emerald-600 font-bold text-sm">✓</span> <span>Testeable</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('modal-detalle').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal-detalle').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(e) {
+            if (e.target === document.getElementById('modal-detalle')) cerrarModal();
+        }
+
+        function filtrarPersona(persona) {
+            const tarjetas = document.querySelectorAll('.target-card');
+            tarjetas.forEach(tarjeta => {
+                if (persona === 'todos') {
+                    tarjeta.style.opacity = '1';
+                    tarjeta.style.filter = 'none';
+                } else {
+                    if (tarjeta.classList.contains(`persona-${persona}`)) {
+                        tarjeta.style.opacity = '1';
+                        tarjeta.style.filter = 'none';
+                    } else {
+                        tarjeta.style.opacity = '0.15';
+                        tarjeta.style.filter = 'grayscale(100%)';
+                    }
+                }
+            });
+
+            const btnTodos = document.getElementById('btn-p-todos');
+            const btnAna = document.getElementById('btn-p-ana');
+            const btnCarlos = document.getElementById('btn-p-carlos');
+
+            btnTodos.className = "px-3 py-1 rounded-full bg-white text-slate-700 border border-slate-300 font-semibold cursor-pointer transition";
+            btnAna.className = "px-3 py-1 rounded-full bg-white text-sky-700 border border-sky-300 font-semibold cursor-pointer transition flex items-center gap-1.5";
+            btnCarlos.className = "px-3 py-1 rounded-full bg-white text-purple-700 border border-purple-300 font-semibold cursor-pointer transition flex items-center gap-1.5";
+
+            if (persona === 'todos') {
+                btnTodos.className = "px-3 py-1 rounded-full bg-slate-800 text-white font-bold cursor-pointer transition";
+            } else if (persona === 'ana') {
+                btnAna.className = "px-3 py-1 rounded-full bg-sky-600 text-white font-bold cursor-pointer transition flex items-center gap-1.5 shadow-xs";
+            } else if (persona === 'carlos') {
+                btnCarlos.className = "px-3 py-1 rounded-full bg-purple-600 text-white font-bold cursor-pointer transition flex items-center gap-1.5 shadow-xs";
+            }
+        }
+
+        function filtrarRelease(release) {
+            const filas = document.querySelectorAll('.release-row');
+            filas.forEach(fila => {
+                if (release === 'todos') {
+                    fila.style.display = '';
+                } else {
+                    fila.style.display = fila.classList.contains(release) ? '' : 'none';
+                }
+            });
+
+            const botones = {
+                todos: document.getElementById('btn-todos'),
+                r1: document.getElementById('btn-r1'),
+                r2: document.getElementById('btn-r2'),
+                r3: document.getElementById('btn-r3')
+            };
+
+            botones.todos.className = "px-3 py-2 rounded bg-white text-slate-700 border border-slate-300 shadow-sm transition cursor-pointer";
+            botones.r1.className = "px-3 py-2 rounded bg-white text-sky-700 border border-sky-300 shadow-sm transition cursor-pointer";
+            botones.r2.className = "px-3 py-2 rounded bg-white text-emerald-700 border border-emerald-300 shadow-sm transition cursor-pointer";
+            botones.r3.className = "px-3 py-2 rounded bg-white text-purple-700 border border-purple-300 shadow-sm transition cursor-pointer";
+
+            if (release === 'todos') {
+                botones.todos.className = "px-3 py-2 rounded bg-slate-800 text-white shadow-sm font-bold cursor-pointer";
+            } else if (release === 'r1') {
+                botones.r1.className = "px-3 py-2 rounded bg-sky-700 text-white shadow-sm font-bold cursor-pointer";
+            } else if (release === 'r2') {
+                botones.r2.className = "px-3 py-2 rounded bg-emerald-600 text-white shadow-sm font-bold cursor-pointer";
+            } else if (release === 'r3') {
+                botones.r3.className = "px-3 py-2 rounded bg-purple-600 text-white shadow-sm font-bold cursor-pointer";
+            }
+        }
+    </script>
+</body>
+</html>
