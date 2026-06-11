@@ -1,7 +1,6 @@
 # user-story-mapping-Proyecto_Scanova
 📊 Tablero interactivo de User Story Mapping con flujos analíticos/operativos y criterios Gherkin para la automatización de procesos mediante IA y OCR.
 
-Markdown
 # Interactive User Story Mapping: Automatización de Procesos con OCR e IA
 
 Mapeo interactivo de historias de usuario diseñado para estructurar el desarrollo de un sistema inteligente de extracción y gestión de datos documentales. El diseño pone especial foco en separar la experiencia del usuario operativo (procesamiento diario) de la del usuario analítico (auditoría y explotación de datos).
