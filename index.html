@@ -21,7 +21,7 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <h1 class="text-3xl font-bold text-slate-900">User Story Mapping</h1>
-                    <p class="text-sm text-slate-500 mt-1">Proyecto Integrador - Ciencia de Datos e IA. Diferenciación explícita de flujos por Proto-persona para evitar mapas genéricos.</p>
+                    <p class="text-sm text-slate-500 mt-1">Proyecto Integrador - Ciencia de Datos e IA - ISPC 2026</p>
                 </div>
                 
                 <!-- FILTROS DE RELEASES -->
@@ -30,10 +30,10 @@
                         Mostrar Todo
                     </button>
                     <button onclick="filtrarRelease('r1')" id="btn-r1" class="px-3 py-2 rounded bg-white text-sky-700 border border-sky-300 shadow-sm transition cursor-pointer">
-                        🚀 Release 1 (MVP)
+                        ⚡ Release 1 (MVP)
                     </button>
                     <button onclick="filtrarRelease('r2')" id="btn-r2" class="px-3 py-2 rounded bg-white text-emerald-700 border border-emerald-300 shadow-sm transition cursor-pointer">
-                        📈 Release 2
+                        ⚡ Release 2
                     </button>
                     <button onclick="filtrarRelease('r3')" id="btn-r3" class="px-3 py-2 rounded bg-white text-purple-700 border border-purple-300 shadow-sm transition cursor-pointer">
                         ⚡ Release 3
@@ -51,7 +51,7 @@
                     <span class="w-2 h-2 rounded-full bg-sky-500"></span> Ana (Administrativa)
                 </button>
                 <button onclick="filtrarPersona('carlos')" id="btn-p-carlos" class="px-3 py-1 rounded-full bg-white text-purple-700 border border-purple-300 font-semibold cursor-pointer transition flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-purple-500"></span> Carlos (Auditor)
+                    <span class="w-2 h-2 rounded-full bg-purple-500"></span> Carlos (Analista)
                 </button>
             </div>
         </header>
@@ -72,7 +72,7 @@
                         <span class="text-[9px] font-bold uppercase bg-sky-100 text-sky-800 px-2 py-0.5 rounded">Flujo Operativo</span>
                     </div>
                     <ul class="text-xs text-slate-600 space-y-1">
-                        <li><strong>Objetivo principal:</strong> Digitalizar y conciliar facturas rápidamente sin carga manual redundante.</li>
+                        <li><strong>Objetivo principal:</strong> Digitalizar facturas rápidamente sin carga manual redundante.</li>
                         <li><strong>Frustración clave:</strong> Pérdida de tiempo tipeando datos campo por campo y corrigiendo errores de transcripción.</li>
                         <li><strong>Nivel técnico:</strong> Intermedio (manejo fluido de planillas de cálculo y sistemas web de gestión).</li>
                         <li class="pt-1 text-sky-700"><strong>Foco en el mapa:</strong> Carga de documentos, control del OCR, edición y persistencia de registros diarios.</li>
@@ -83,7 +83,7 @@
                     <div class="flex items-center justify-between mb-2 pb-2 border-b border-purple-100">
                         <div class="flex items-center gap-2">
                             <div class="w-2.5 h-2.5 rounded-full bg-purple-500"></div>
-                            <h3 class="text-sm font-bold text-slate-900">Carlos, Auditor / Analista de Datos</h3>
+                            <h3 class="text-sm font-bold text-slate-900">Carlos, Analista de Datos / Auditor </h3>
                         </div>
                         <span class="text-[9px] font-bold uppercase bg-purple-100 text-purple-800 px-2 py-0.5 rounded">Flujo Analítico</span>
                     </div>
@@ -125,28 +125,28 @@
                             <span class="block text-[9px] text-amber-400 font-mono">ACTIVIDAD</span> Validar y Controlar
                         </th>
                         <th class="p-3 text-center text-xs font-bold uppercase tracking-wider border border-slate-800 bg-slate-950 w-1/5">
-                            <span class="block text-[9px] text-amber-400 font-mono">ACTIVIDAD</span> Gestionar y Persistir
+                            <span class="block text-[9px] text-amber-400 font-mono">ACTIVIDAD</span> Almacenar y Gestionar
                         </th>
                         <th class="p-3 text-center text-xs font-bold uppercase tracking-wider border border-slate-800 bg-slate-950 w-1/5">
                             <span class="block text-[9px] text-amber-400 font-mono">ACTIVIDAD</span> Consultar y Exportar
                         </th>
                     </tr>
-                    <!-- CAPA 2: TAREAS (BACKBONE) -->
+                    <!-- CAPA 2: TAREAS -->
                     <tr class="backbone-cell text-slate-100">
                         <th class="p-3 text-center text-xs font-semibold border border-slate-600">
-                            <span class="block text-[9px] text-slate-300 font-mono">TAREAS (BACKBONE)</span> Subir archivo de factura
+                            <span class="block text-[9px] text-slate-300 font-mono">TAREAS</span> Subir archivo de factura
                         </th>
                         <th class="p-3 text-center text-xs font-semibold border border-slate-600">
-                            <span class="block text-[9px] text-slate-300 font-mono">TAREAS (BACKBONE)</span> Detectar campos y extraer texto
+                            <span class="block text-[9px] text-slate-300 font-mono">TAREAS</span> Detectar campos y extraer texto
                         </th>
                         <th class="p-3 text-center text-xs font-semibold border border-slate-600">
-                            <span class="block text-[9px] text-slate-300 font-mono">TAREAS (BACKBONE)</span> Revisar formulario de datos
+                            <span class="block text-[9px] text-slate-300 font-mono">TAREAS</span> Revisar formulario de datos
                         </th>
                         <th class="p-3 text-center text-xs font-semibold border border-slate-600">
-                            <span class="block text-[9px] text-slate-300 font-mono">TAREAS (BACKBONE)</span> Guardar comprobante
+                            <span class="block text-[9px] text-slate-300 font-mono">TAREAS</span> Guardar comprobante
                         </th>
                         <th class="p-3 text-center text-xs font-semibold border border-slate-600">
-                            <span class="block text-[9px] text-slate-300 font-mono">TAREAS (BACKBONE)</span> Visualizar e interrogar historial
+                            <span class="block text-[9px] text-slate-300 font-mono">TAREAS</span> Visualizar y consultar historial
                         </th>
                     </tr>
                 </thead>
@@ -354,7 +354,7 @@
                 ] 
             },
             7: { 
-                id: "HU-07", rol: "Carlos (Auditor / Analista)", prioridad: "Media", titulo: "Historial de facturas", historia: "Como auditor, quiero poder consultar las facturas registradas en el sistema, para acceder rápidamente a la información sin revisar archivos manuales.", 
+                id: "HU-07", rol: "Carlos (Auditor / Analista)", prioridad: "Media", titulo: "Historial de facturas", historia: "Como analista y auditor, quiero poder consultar las facturas registradas en el sistema, para acceder rápidamente a la información sin revisar archivos manuales.", 
                 criterios: [
                     "Dado que existen facturas registradas en el sistema / Cuando el usuario accede al módulo de consulta / Entonces el sistema muestra un listado de facturas.", 
                     "Dado que se visualiza el listado de facturas / Cuando el sistema presenta la información / Entonces cada factura incluye datos básicos como fecha, proveedor, monto, entre otros.", 
@@ -364,7 +364,7 @@
                 ] 
             },
             8: { 
-                id: "HU-08", rol: "Carlos (Auditor / Analista)", prioridad: "Baja", titulo: "Búsqueda y filtros", historia: "Como auditor, quiero poder buscar y filtrar facturas por distintos criterios, para encontrar rápidamente la información que necesito en mis controles.", 
+                id: "HU-08", rol: "Carlos (Auditor / Analista)", prioridad: "Baja", titulo: "Búsqueda y filtros", historia: "Como analista y auditor, quiero poder buscar y filtrar facturas por distintos criterios, para encontrar rápidamente la información que necesito en mis controles.", 
                 criterios: [
                     "Dado que existen facturas registradas / Cuando el usuario realiza una búsqueda / Entonces el sistema muestra coincidencias.", 
                     "Dado que el usuario desea acortar resultados/ Cuando aplica filtros por fecha o proveedor / Entonces el sistema muestra únicamente las facturas que cumplan esos criterios.", 
@@ -385,7 +385,7 @@
                 ] 
             },
             10: { 
-                id: "HU-10", rol: "Carlos (Auditor / Analista)", prioridad: "Baja", titulo: "Exportación de facturas", historia: "Como auditor, quiero exportar las facturas registradas a un archivo (Excel o CSV), para poder utilizarlas en reportes, análisis o compartirlas con otros sistemas.", 
+                id: "HU-10", rol: "Carlos (Auditor / Analista)", prioridad: "Baja", titulo: "Exportación de facturas", historia: "Como analista y auditor, quiero exportar las facturas registradas a un archivo (Excel o CSV), para poder utilizarlas en reportes, análisis o compartirlas con otros sistemas.", 
                 criterios: [
                     "Dado que el usuario desea exportar facturas / Cuando selecciona el formato de exportación EXCEL O CSV / Entonces el sistema genera el archivo en el formato elegido.", 
                     "Dado que el usuario tiene filtros aplicados / Cuando exporta las facturas / Entonces se exportan únicamente las facturas visibles según esos filtros.", 
